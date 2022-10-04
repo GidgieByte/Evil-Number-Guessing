@@ -1,14 +1,18 @@
 #Do you want to play a game of evil number guessing?
 import os, random, sys
-
-print("I'm thinking of a number between 1 and 100")
+import pyinputplus as pyip
 
 minNum = 1
 maxNum = 100
 
-for i in range(7): #Seven tries
+print(f"I'm thinking of a number between {minNum} and {maxNum}")
+
+for i in range(7, 0, -1): #Seven tries
   middleNum = int((maxNum - minNum) / 2) + minNum
-  guess = int(input("Take a guess\n"))
+  plur = "es"
+  if i == 1:
+    plur = ""
+  guess = pyip.inputNum(prompt = f"You have {i} guess{plur} left\n", blockRegexes=[r'\.'])
   if minNum == maxNum and guess == minNum: #There are no more available numbers; the computer has nowhere else to go
     print("You have bested me!")
     #The player has won so the program ends. This command also throws the error 'repl process died unexpectedly:' which I find hilarious and refuse to change.
@@ -25,4 +29,4 @@ for i in range(7): #Seven tries
 #The player was unable to guess the right number; the computer picks a random number within the range that's still available 
 answer = random.randint(minNum, maxNum)
 
-print("Haha! You fool! The correct answer is " + str(answer) + "!")
+print(f"Haha! You fool! The correct answer was {answer}!")
